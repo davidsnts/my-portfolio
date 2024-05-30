@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+require('../db/mongoConnection');
+
 router.get('/', (req,res) =>{
     res.json({
         success:false,
