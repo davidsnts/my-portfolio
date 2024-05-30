@@ -1,3 +1,5 @@
+const { response } = require('express');
+
 const router = require('express').Router();
 
 router.get('/', (req, res) =>{
@@ -23,6 +25,18 @@ router.get('/', (req, res) =>{
         success: true,
         data : data
     });
+});
+
+router.get('/:portfolioId', (req, res) => {
+    console.log('id: ', req.params.portfolioId);
+    res.json({
+        success: true,
+        id : req.params.portfolioId
+    });
+})
+
+router.post('/', (req, res)=>{
+    res.json(req.body)
 });
 
 module.exports = router;

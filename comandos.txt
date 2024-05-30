@@ -2,3 +2,4 @@ npm init --y
 git init 
 npm i express
 npm i -D nodemon
+npm i body-parser
