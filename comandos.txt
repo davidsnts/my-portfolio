@@ -3,3 +3,4 @@ git init
 npm i express
 npm i -D nodemon
 npm i body-parser
+npm i dotenv
