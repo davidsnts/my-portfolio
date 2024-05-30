@@ -1,0 +1,23 @@
+{
+  "name": "my-portfolio",
+  "version": "1.0.0",
+  "descriptiom": "My personal portfolio",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MERN",
+    "MongoDB",
+    "Express",
+    "React.js",
+    "Node.js",
+    "Fullstack"
+  ],
+  "author": "David Santos",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
