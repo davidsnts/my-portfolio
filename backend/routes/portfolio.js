@@ -1,42 +1,99 @@
 const { response } = require('express');
+const Portfolio = require('../models/Portfolio')
 
 const router = require('express').Router();
 
-router.get('/', (req, res) =>{
-    const data = [{
-        id: 1,
-        name: "My first Project",
-        createdAt: '2020-01-01'
-    },
-    {
-        id: 2,
-        name: "My Second Project",
-        createdAt: '2020-02-02'
-    },
-    {
-        id: 3,
-        name: "My other Project",
-        createdAt: '2020-01-03'
-    },
-
-    ];
-
-    res.json({
-        success: true,
-        data : data
+router.post('/', async (req, res) =>{    
+    const portfolio = new Portfolio({
+        title: req.body.title,
+        description: req.body.description
     });
+
+    try {
+        const savedPorfolio = await portfolio.save()
+        res.json({
+            success : true,
+            data : savedPorfolio
+        });
+    } catch (err) {
+        res.json({
+            success : false,
+            message : err
+        });
+    }  
 });
 
-router.get('/:portfolioId', (req, res) => {
-    console.log('id: ', req.params.portfolioId);
-    res.json({
-        success: true,
-        id : req.params.portfolioId
-    });
+
+
+router.get('/', async (req, res) =>{  
+    try {
+        const portfolio = await Portfolio.find();
+        res.json({
+            success: true,
+            data : portfolio       
+        });
+    } catch (error) {        
+        res.json({            
+            success : false,
+            message : error
+        });
+    }    
+});
+
+router.get('/:slug', async (req,res) => {
+    try {
+        const portfolio = await Portfolio.findOne({ slug : req.params.slug });        
+        res.json({
+            success : true,
+            data : portfolio
+        })
+        } catch (error) {            
+        res.json({
+            success : false,
+            message : error
+        })
+    }    
+});
+
+router.patch('/:slug', async (req, res) =>{
+    try {
+        const updatedPortFolio = await Portfolio.updateOne(
+        {
+            slug : req.params.slug            
+        },
+        {
+            title : req.body.title,
+            description : req.body.description 
+        });
+        
+        res.json({
+            success : true,
+            updated : updatedPortFolio.modifiedCount
+        })
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error
+        })
+    }
+});
+
+router.delete('/:slug',async (req, res) => {
+    try {
+        const deletedPortfolio = await Portfolio.deleteOne({
+            slug :req.params.slug
+        })
+
+        res.json({
+            success : true,
+            data : deletedPortfolio
+        })
+    } catch (error) {
+        res.json({
+            success : false,
+            message : error
+        })
+    }
 })
-
-router.post('/', (req, res)=>{
-    res.json(req.body)
-});
 
 module.exports = router;
